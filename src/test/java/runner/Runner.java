@@ -8,7 +8,7 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 
 @Configuration
-@ComponentScan(basePackages = {"kirti"})
+@ComponentScan(basePackages = {"pages"})
 @Listeners(listener.Listener.class)
 @CucumberOptions(features = "feature/flightSearch.feature", glue = { "stepDefinition" })
 public class Runner extends AbstractTestNGCucumberTests {
