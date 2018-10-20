@@ -9,7 +9,7 @@ public class DriverManager extends BasePage {
 
 	public static WebDriver getDriver(String driverName){
 		if(driverName.equalsIgnoreCase("ChromeDriver")){
-		System.setProperty("webdriver.chrome.driver", "/drivers/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\drivers\\chromedriver.exe");
 		driver = new ChromeDriver();
 		return driver;
 		}
