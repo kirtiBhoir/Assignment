@@ -2,34 +2,28 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
     <line>
-      <![CDATA[user selects[[ChromeDriver: chrome on XP (ad95dc340fd71822a0a48b416fe0d324)] -> css selector: [id=DepartDate]]As Departure date]]>
+      <![CDATA[user selects[[ChromeDriver: chrome on XP (6503429347b677f24b78a48ab1f962e5)] -> css selector: [id=DepartDate]]As Departure date]]>
     </line>
     <line>
-      <![CDATA[Count of Total flights available:::39]]>
+      <![CDATA[user selects[[ChromeDriver: chrome on XP (6503429347b677f24b78a48ab1f962e5)] -> css selector: [id=ReturnDate]]As Return date]]>
     </line>
     <line>
-      <![CDATA[user selects[[ChromeDriver: chrome on XP (fa84df2e2468f607a141a77334168eba)] -> css selector: [id=DepartDate]]As Departure date]]>
-    </line>
-    <line>
-      <![CDATA[user selects[[ChromeDriver: chrome on XP (fa84df2e2468f607a141a77334168eba)] -> css selector: [id=ReturnDate]]As Return date]]>
-    </line>
-    <line>
-      <![CDATA[Count of Total flights available:::48]]>
+      <![CDATA[user selects[[ChromeDriver: chrome on XP (f499e1808c21b36d00799861306bc208)] -> css selector: [id=DepartDate]]As Departure date]]>
     </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="122996" started-at="2018-10-20T10:01:50Z" finished-at="2018-10-20T10:03:53Z">
+  <suite name="Default suite" duration-ms="237937" started-at="2018-10-23T15:09:53Z" finished-at="2018-10-23T15:13:51Z">
     <groups>
       <group name="cucumber">
-        <method signature="AbstractTestNGCucumberTests.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.Runner@62fdb4a6]" name="feature" class="cucumber.api.testng.AbstractTestNGCucumberTests"/>
+        <method signature="AbstractTestNGCucumberTests.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.Runner@5e25a92e]" name="feature" class="cucumber.api.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test name="Default test" duration-ms="122996" started-at="2018-10-20T10:01:50Z" finished-at="2018-10-20T10:03:53Z">
+    <test name="Default test" duration-ms="237937" started-at="2018-10-23T15:09:53Z" finished-at="2018-10-23T15:13:51Z">
       <class name="runner.Runner">
-        <test-method status="PASS" signature="setUpClass()[pri:0, instance:runner.Runner@62fdb4a6]" name="setUpClass" is-config="true" duration-ms="323" started-at="2018-10-20T10:01:50Z" finished-at="2018-10-20T10:01:51Z">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:runner.Runner@5e25a92e]" name="setUpClass" is-config="true" duration-ms="357" started-at="2018-10-23T15:09:53Z" finished-at="2018-10-23T15:09:54Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.Runner@62fdb4a6]" name="feature" duration-ms="122548" started-at="2018-10-20T10:01:51Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2018-10-20T10:03:53Z">
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:runner.Runner@5e25a92e]" name="feature" duration-ms="237436" started-at="2018-10-23T15:09:54Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2018-10-23T15:13:51Z">
           <params>
             <param index="0">
               <value>
@@ -39,23 +33,17 @@
           </params>
           <reporter-output>
             <line>
-              <![CDATA[user selects[[ChromeDriver: chrome on XP (ad95dc340fd71822a0a48b416fe0d324)] -> css selector: [id=DepartDate]]As Departure date]]>
+              <![CDATA[user selects[[ChromeDriver: chrome on XP (6503429347b677f24b78a48ab1f962e5)] -> css selector: [id=DepartDate]]As Departure date]]>
             </line>
             <line>
-              <![CDATA[Count of Total flights available:::39]]>
+              <![CDATA[user selects[[ChromeDriver: chrome on XP (6503429347b677f24b78a48ab1f962e5)] -> css selector: [id=ReturnDate]]As Return date]]>
             </line>
             <line>
-              <![CDATA[user selects[[ChromeDriver: chrome on XP (fa84df2e2468f607a141a77334168eba)] -> css selector: [id=DepartDate]]As Departure date]]>
-            </line>
-            <line>
-              <![CDATA[user selects[[ChromeDriver: chrome on XP (fa84df2e2468f607a141a77334168eba)] -> css selector: [id=ReturnDate]]As Return date]]>
-            </line>
-            <line>
-              <![CDATA[Count of Total flights available:::48]]>
+              <![CDATA[user selects[[ChromeDriver: chrome on XP (f499e1808c21b36d00799861306bc208)] -> css selector: [id=DepartDate]]As Departure date]]>
             </line>
           </reporter-output>
         </test-method> <!-- feature -->
-        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:runner.Runner@62fdb4a6]" name="tearDownClass" is-config="true" duration-ms="4" started-at="2018-10-20T10:03:53Z" finished-at="2018-10-20T10:03:53Z">
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:runner.Runner@5e25a92e]" name="tearDownClass" is-config="true" duration-ms="40" started-at="2018-10-23T15:13:51Z" finished-at="2018-10-23T15:13:51Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
