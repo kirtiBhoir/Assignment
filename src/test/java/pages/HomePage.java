@@ -54,12 +54,17 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 	@FindBy(css = RADIO_BTN_ROUND_TRIP)
 	private WebElement radioBtnRoundTrip;
 
+	/**
+	 * Method to verify clear trip home page
+	 */
 	public void verifyHomePage() {
-
-		assertTrue(isDisplayed(logoClearTrip));
-		assertTrue(isDisplayed(textSearchFlights));
+		assertTrue(isVisible(logoClearTrip));
+		assertTrue(isVisible(textSearchFlights));
 	}
 
+	/**
+	 * Method to search without entering city name
+	 */
 	public void searchWithoutCity() {
 		if (!dropdownFromCity.getText().isEmpty()) {
 			dropdownFromCity.clear();
@@ -69,17 +74,29 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 		}
 	}
 
+	/**
+	 * Method to search flights
+	 */
 	public void searchFlights() {
 		waitForVisible(btnSearchFlights);
 		btnSearchFlights.submit();
-		waitForPageToLoad();
+		waiforPageToLoad();
 	}
 
+	/**
+	 * Method to verify error message when flights are searched without cities
+	 */
 	public void validateErrorMessage() {
-		assertTrue(isDisplayed(errorMessageEmptyCity));
+		assertTrue(isVisible(errorMessageEmptyCity));
 		Assert.assertEquals(errorMessageEmptyCity.getText().contains(MESSAGE_EMPTY_CITY), true);
 	}
 
+	/**
+	 * Method to enter location details for flight search
+	 * 
+	 * @param fromCity
+	 * @param toCity
+	 */
 	public void fillLocationDetails(String fromCity, String toCity) {
 		waitForVisible(dropdownFromCity);
 		dropdownFromCity.clear();
@@ -92,30 +109,56 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 
 	}
 
+	/**
+	 * Method to enter person details for flight search
+	 * 
+	 * @param adultCount
+	 * @param childrenCount
+	 * @param infantCount
+	 */
 	public void fillPersonCount(String adultCount, String childrenCount, String infantCount) {
 		waitForVisible(dropdownAdult);
-		selectFromDropDownByIndex(dropdownAdult, Integer.parseInt(adultCount));
-		selectFromDropDownByIndex(dropdownChildren, Integer.parseInt(childrenCount));
-		selectFromDropDownByIndex(dropdownInfant, Integer.parseInt(infantCount));
+		waitForVisible(dropdownChildren);
+		waitForVisible(dropdownInfant);
+
+		// provided implementation to functional interface
+		ConvertDataType convertToInteger = (String value) -> Integer.parseInt(value);
+
+		// call to functional interface using lambda expression
+		selectFromDropDownByIndex(dropdownAdult, operate(adultCount, convertToInteger));
+		selectFromDropDownByIndex(dropdownChildren, operate(childrenCount, convertToInteger));
+		selectFromDropDownByIndex(dropdownInfant, operate(infantCount, convertToInteger));
+
 	}
 
+	/**
+	 * Method to select trip type
+	 * 
+	 * @param tripType
+	 */
 	public void selectTripType(String tripType) {
 		if (tripType.equalsIgnoreCase("one way")) {
 			waitForVisible(radioBtnOneWay);
 			if (!radioBtnOneWay.isSelected()) {
 				radioBtnOneWay.click();
-				waitForPageToLoad();
+				waiforPageToLoad();
 			}
 		} else {
 			waitForVisible(radioBtnRoundTrip);
 			if (!radioBtnRoundTrip.isSelected()) {
 				radioBtnRoundTrip.click();
-				waitForPageToLoad();
+				waiforPageToLoad();
 			}
 		}
 
 	}
 
+	/**
+	 * Method to select departure and arrival date
+	 * 
+	 * @param tripType
+	 * @param date
+	 */
 	public void fillDateDetails(String tripType, String date) {
 		if (tripType.equalsIgnoreCase("depart")) {
 			waitForVisible(departDate);

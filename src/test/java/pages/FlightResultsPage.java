@@ -3,23 +3,18 @@ package pages;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.springframework.stereotype.Component;
-import org.testng.Reporter;
 
 import locators.FlightResultPageLoc;
-import messages.FlightResultsPageMessages;
 
 @Component
-public class FlightResultsPage extends BasePage implements FlightResultPageLoc, FlightResultsPageMessages {
-
-	private final static Logger logger = Logger.getLogger(FlightResultsPage.class);
-
+public class FlightResultsPage extends BasePage implements FlightResultPageLoc {
 	@FindBy(xpath = TEXT_RESULT_COUNT)
 	private List<WebElement> listSearchResults;
 
@@ -32,21 +27,31 @@ public class FlightResultsPage extends BasePage implements FlightResultPageLoc, 
 	@FindBy(xpath = LIST_FLIGHTS)
 	private List<WebElement> listOfFlights;
 
+	/**
+	 * Method to verify flight search result page
+	 */
 	public void verifyflightSearchResultsPage() {
+		waiforPageToLoad();
 		waitForVisible(textSearchResult);
-		assertTrue(isDisplayed(textSearchResult));
+		assertTrue(isVisible(textSearchResult));
 		assertTrue(!textSearchResult.getText().isEmpty());
-		assertTrue(isDisplayed(iconHotelApp));
-		waitForPageToLoad();
+		assertTrue(isVisible(iconHotelApp));
 		assertTrue(listSearchResults.size() > 0);
-		waitForPageToLoad();
 		verifyFlightList();
 
 	}
 
+	/**
+	 * Method to verify available flights list using java 8 stream
+	 */
 	public void verifyFlightList() {
-		logger.info("Count of Total flights available:::" + listOfFlights.size());
-		Reporter.log("Count of Total flights available:::" + listOfFlights.size());
+		waiforPageToLoad();
+		waiforLoaderToDismiss();
 		Assert.assertThat(listOfFlights.size() > 0, Matchers.equalTo(true));
+		listOfFlights.stream().filter(element -> element.getText().equalsIgnoreCase("")).collect(Collectors.toList());
+		List<String> ResultList = listOfFlights.stream().map(element -> element.getText()).collect(Collectors.toList());
+		Assert.assertThat(ResultList.size() > 0, Matchers.equalTo(true));
+
 	}
+
 }

@@ -9,13 +9,21 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-
 public class FileReader {
 	private static String sheetName = "Sheet1";
-	private static String inputFilepath = System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\data.xlsx";
-	
+	private static String inputFilepath = System.getProperty("user.dir")
+			+ "\\src\\test\\resources\\testdata\\data.xlsx";
+
 	private static Map<String, String> map = new HashMap<String, String>();
 
+	/**
+	 * Method to read data from excel sheet
+	 * 
+	 * @param testcasename
+	 * @param columnname
+	 * @return
+	 * @throws IOException
+	 */
 	public String getData(String testcasename, String columnname) throws IOException {
 		FileInputStream fis;
 		int k = 0;
@@ -31,8 +39,8 @@ public class FileReader {
 							.equalsIgnoreCase(columnname)) {
 						k = j;
 					}
-					map.put(ws.getRow(i).getCell(0,Row.CREATE_NULL_AS_BLANK).toString().replace(".0", ""),
-							 ws.getRow(i).getCell(k,Row.CREATE_NULL_AS_BLANK).toString().replace(".0", "")); 
+					map.put(ws.getRow(i).getCell(0, Row.CREATE_NULL_AS_BLANK).toString().replace(".0", ""),
+							ws.getRow(i).getCell(k, Row.CREATE_NULL_AS_BLANK).toString().replace(".0", ""));
 				}
 			}
 		} catch (Exception e) {

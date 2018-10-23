@@ -4,33 +4,42 @@ import java.io.IOException;
 
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import pages.ApiValidationPage;
 import pages.BasePage;
 import pages.FlightResultsPage;
 import pages.HomePage;
 
+@Component
 public class StepDefinition extends BasePage {
 
+	ApiValidationPage apiValidationpage = new ApiValidationPage();
 	@Autowired
-	private HomePage homePage;
+	HomePage homePage;
 
 	@Autowired
-	private FlightResultsPage resultPage;
+	FlightResultsPage FlightResultsPage;
+
+	ApiValidationPage apiValidtionPage = new ApiValidationPage();
 
 	Scenario scenario;
 
 	@Before
 	public void before(Scenario scenario) throws IOException {
+
 		getDriver();
 		launchApplication();
 		this.scenario = scenario;
 		homePage = PageFactory.initElements(driver, HomePage.class);
-		resultPage = PageFactory.initElements(driver, FlightResultsPage.class);
+		FlightResultsPage = PageFactory.initElements(driver, FlightResultsPage.class);
+
 	}
 
 	@Then("^After navigating to cleartrip website user should see cleartrip homepage$")
@@ -69,7 +78,6 @@ public class StepDefinition extends BasePage {
 
 	@And("^user enters \"([^\"]*)\" along with \"([^\"]*)\" and \"([^\"]*)\"$")
 	public void fillPersonCount(String adultCount, String childrenCount, String infantCount) throws Exception {
-		// HomePage homePage = PageFactory.initElements(driver, HomePage.class);
 		homePage.fillPersonCount(testData.getData(scenario.getName(), adultCount),
 				testData.getData(scenario.getName(), childrenCount), testData.getData(scenario.getName(), infantCount));
 	}
@@ -81,6 +89,33 @@ public class StepDefinition extends BasePage {
 
 	@Then("^user should see flight search results$")
 	public void verifySearchResult() {
-		resultPage.verifyflightSearchResultsPage();
+		FlightResultsPage.verifyflightSearchResultsPage();
 	}
+
+	@Then("^user wants details for \"([^\"]*)\"$")
+	public void fetchDetailsForCity(String cityName) throws IOException {
+		System.out.println("city name" + cityName);
+		apiValidtionPage.fetchDetailsForCity(testData.getData(scenario.getName(), cityName));
+	}
+
+	@Then("^user validates status details$")
+	public void validateStatusDetails() {
+		apiValidationpage.validateStatusDetails();
+	}
+
+	@And("^user validates headers$")
+	public void validateHeader() {
+		apiValidationpage.validateHeader();
+	}
+
+	@Then("^user validates city details for \"([^\"]*)\"$")
+	public void validateCityDetails(String cityName) throws IOException {
+		apiValidationpage.validateCityDetails(testData.getData(scenario.getName(), cityName));
+	}
+
+	@After
+	public void closeSession() {
+		closeApplication();
+	}
+
 }

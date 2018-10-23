@@ -1,16 +1,14 @@
 package runner;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.testng.annotations.Listeners;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.testng.AbstractTestNGCucumberTests;
 
-@Configuration
-@ComponentScan(basePackages = {"pages"})
 @Listeners(listener.Listener.class)
-@CucumberOptions(features = "feature/flightSearch.feature", glue = { "stepDefinition" })
+@CucumberOptions(features = "feature/flightSearch.feature", glue = { "stepDefinition" }, plugin = { "pretty",
+		"html:target/cucumber-reports/cucumber-pretty", "json:target/cucumber-reports/CucumberTestReport.json" })
+
 public class Runner extends AbstractTestNGCucumberTests {
-	
+
 }
