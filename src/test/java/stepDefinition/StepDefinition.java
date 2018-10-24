@@ -27,7 +27,7 @@ public class StepDefinition extends BasePage {
 	HomePage homePage;
 
 	@Autowired
-	FlightResultsPage FlightResultsPage;
+	FlightResultsPage flightResultsPage;
 
 	Scenario scenario;
 
@@ -40,10 +40,10 @@ public class StepDefinition extends BasePage {
 		launchApplication();
 		this.scenario = scenario;
 		homePage = context.getBean(HomePage.class);
-		FlightResultsPage = context.getBean(FlightResultsPage.class);
+		flightResultsPage = context.getBean(FlightResultsPage.class);
 		apiValidationpage = context.getBean(ApiValidationPage.class);
 		homePage.init(driver);
-		FlightResultsPage.init(driver);
+		flightResultsPage.init(driver);
 
 	}
 
@@ -94,7 +94,7 @@ public class StepDefinition extends BasePage {
 
 	@Then("^user should see flight search results$")
 	public void verifySearchResult() {
-		FlightResultsPage.verifyflightSearchResultsPage();
+		flightResultsPage.verifyflightSearchResultsPage();
 	}
 
 	@Then("^user wants details for \"([^\"]*)\"$")
