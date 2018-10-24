@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.springframework.stereotype.Component;
 
 import locators.FlightResultPageLoc;
@@ -26,6 +28,13 @@ public class FlightResultsPage extends BasePage implements FlightResultPageLoc {
 
 	@FindBy(xpath = LIST_FLIGHTS)
 	private List<WebElement> listOfFlights;
+
+	/**
+	 * Method to initialize page object model
+	 */
+	public void init(WebDriver driver) {
+		PageFactory.initElements(driver, this);
+	}
 
 	/**
 	 * Method to verify flight search result page

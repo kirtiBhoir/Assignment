@@ -2,8 +2,8 @@ package stepDefinition;
 
 import java.io.IOException;
 
-import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
 
 import cucumber.api.Scenario;
@@ -20,30 +20,39 @@ import pages.HomePage;
 @Component
 public class StepDefinition extends BasePage {
 
-	ApiValidationPage apiValidationpage = new ApiValidationPage();
+	@Autowired
+	private ApiValidationPage apiValidationpage;
+
 	@Autowired
 	HomePage homePage;
 
 	@Autowired
 	FlightResultsPage FlightResultsPage;
 
-	ApiValidationPage apiValidtionPage = new ApiValidationPage();
-
 	Scenario scenario;
+
+	AbstractApplicationContext context;
 
 	@Before
 	public void before(Scenario scenario) throws IOException {
-
+		context = getApplicationContext();
 		getDriver();
 		launchApplication();
 		this.scenario = scenario;
-		homePage = PageFactory.initElements(driver, HomePage.class);
-		FlightResultsPage = PageFactory.initElements(driver, FlightResultsPage.class);
+		homePage = context.getBean(HomePage.class);
+		System.out.println("homePage:" + homePage);
+		FlightResultsPage = context.getBean(FlightResultsPage.class);
+		System.out.println("FlightResultsPage:" + FlightResultsPage);
+		apiValidationpage = context.getBean(ApiValidationPage.class);
+		System.out.println("apiValidationpage:" + apiValidationpage);
+		homePage.init(driver);
+		FlightResultsPage.init(driver);
 
 	}
 
 	@Then("^After navigating to cleartrip website user should see cleartrip homepage$")
 	public void validateHomePage() {
+		System.out.println("homePage:" + homePage);
 		homePage.verifyHomePage();
 	}
 
@@ -95,7 +104,7 @@ public class StepDefinition extends BasePage {
 	@Then("^user wants details for \"([^\"]*)\"$")
 	public void fetchDetailsForCity(String cityName) throws IOException {
 		System.out.println("city name" + cityName);
-		apiValidtionPage.fetchDetailsForCity(testData.getData(scenario.getName(), cityName));
+		apiValidationpage.fetchDetailsForCity(testData.getData(scenario.getName(), cityName));
 	}
 
 	@Then("^user validates status details$")

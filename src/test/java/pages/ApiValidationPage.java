@@ -1,5 +1,6 @@
 package pages;
 
+import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
 import io.restassured.RestAssured;
@@ -8,6 +9,7 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+@Component
 public class ApiValidationPage extends BasePage {
 	static Response response;
 	static String responseBody = "";

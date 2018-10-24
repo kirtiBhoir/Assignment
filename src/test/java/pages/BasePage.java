@@ -23,8 +23,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.testng.Reporter;
 
+import core.AppConfig;
 import core.DriverManager;
 import cucumber.api.Scenario;
 import utils.FileReader;
@@ -37,6 +40,16 @@ public class BasePage {
 	public static WebDriver driver;
 	public FileReader testData = new FileReader();
 	public Scenario scenario;
+
+	/**
+	 * Method to get application context
+	 * 
+	 * @return
+	 */
+	public AbstractApplicationContext getApplicationContext() {
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+		return context;
+	}
 
 	/**
 	 * functional interface to convert datatype to integer
@@ -152,7 +165,7 @@ public class BasePage {
 	 */
 	protected void waiforLoaderToDismiss() {
 		try {
-			Thread.sleep(30000);
+			Thread.sleep(50000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

@@ -3,8 +3,10 @@ package pages;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.springframework.stereotype.Component;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -53,11 +55,18 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 
 	@FindBy(css = RADIO_BTN_ROUND_TRIP)
 	private WebElement radioBtnRoundTrip;
+	/**
+	 * Method to initialize page object model
+	 */
+	public void init(WebDriver driver) {
+		PageFactory.initElements(driver, this);
+	}
 
 	/**
 	 * Method to verify clear trip home page
 	 */
 	public void verifyHomePage() {
+		
 		assertTrue(isVisible(logoClearTrip));
 		assertTrue(isVisible(textSearchFlights));
 	}
