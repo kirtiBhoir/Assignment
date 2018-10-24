@@ -21,7 +21,7 @@ import pages.HomePage;
 public class StepDefinition extends BasePage {
 
 	@Autowired
-	private ApiValidationPage apiValidationpage;
+	ApiValidationPage apiValidationpage;
 
 	@Autowired
 	HomePage homePage;
@@ -40,11 +40,8 @@ public class StepDefinition extends BasePage {
 		launchApplication();
 		this.scenario = scenario;
 		homePage = context.getBean(HomePage.class);
-		System.out.println("homePage:" + homePage);
 		FlightResultsPage = context.getBean(FlightResultsPage.class);
-		System.out.println("FlightResultsPage:" + FlightResultsPage);
 		apiValidationpage = context.getBean(ApiValidationPage.class);
-		System.out.println("apiValidationpage:" + apiValidationpage);
 		homePage.init(driver);
 		FlightResultsPage.init(driver);
 
@@ -52,7 +49,6 @@ public class StepDefinition extends BasePage {
 
 	@Then("^After navigating to cleartrip website user should see cleartrip homepage$")
 	public void validateHomePage() {
-		System.out.println("homePage:" + homePage);
 		homePage.verifyHomePage();
 	}
 
