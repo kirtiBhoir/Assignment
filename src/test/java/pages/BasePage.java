@@ -165,8 +165,8 @@ public class BasePage {
 	 */
 	protected void waiforLoaderToDismiss() {
 		try {
-			Thread.sleep(50000);
-		} catch (InterruptedException e) {
+			driver.manage().timeouts().implicitlyWait(500, TimeUnit.SECONDS);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
