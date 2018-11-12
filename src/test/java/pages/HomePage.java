@@ -55,6 +55,7 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 
 	@FindBy(css = RADIO_BTN_ROUND_TRIP)
 	private WebElement radioBtnRoundTrip;
+
 	/**
 	 * Method to initialize page object model
 	 */
@@ -66,7 +67,7 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 	 * Method to verify clear trip home page
 	 */
 	public void verifyHomePage() {
-		
+
 		assertTrue(isVisible(logoClearTrip));
 		assertTrue(isVisible(textSearchFlights));
 	}
@@ -180,7 +181,6 @@ public class HomePage extends BasePage implements HomePageLoc, HomePageMessages 
 			returnDate.sendKeys(date);
 			Reporter.log("user selects" + returnDate + "As Return date");
 		}
-		textSearchFlights.click();
 
 	}
 
