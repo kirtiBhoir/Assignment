@@ -55,8 +55,8 @@ public class FlightResultsPage extends BasePage implements FlightResultPageLoc {
 	 */
 	public void verifyFlightList() {
 		waiforPageToLoad();
-		waiforLoaderToDismiss();
 		Assert.assertThat(listOfFlights.size() > 0, Matchers.equalTo(true));
+		waiforLoaderToDismiss();
 		listOfFlights.stream().filter(element -> element.getText().equalsIgnoreCase("")).collect(Collectors.toList());
 		List<String> ResultList = listOfFlights.stream().map(element -> element.getText()).collect(Collectors.toList());
 		Assert.assertThat(ResultList.size() > 0, Matchers.equalTo(true));

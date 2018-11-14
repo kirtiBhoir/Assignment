@@ -152,7 +152,7 @@ public class BasePage {
 	 * Method to wait for complete page to load
 	 */
 	protected void waiforPageToLoad() {
-		driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
 		JavascriptExecutor js = ((JavascriptExecutor) driver);
 		String pageLoadStatus = (String) js.executeScript("return document.readyState");
 		while (!pageLoadStatus.equals("complete")) {
@@ -165,7 +165,8 @@ public class BasePage {
 	 */
 	protected void waiforLoaderToDismiss() {
 		try {
-			driver.manage().timeouts().implicitlyWait(500, TimeUnit.SECONDS);
+			driver.navigate().refresh();
+			driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -225,5 +226,6 @@ public class BasePage {
 		String value = properties.getProperty(key);
 		return value;
 	}
-
+	
+	
 }
