@@ -1,0 +1,9 @@
+{
+	"searchApiEndPoint": "/places/airports/search?string={city}",
+	"serverName": "Cleartrip Application Server V 4.0.2",
+	"contentLength": "83",
+	"connectionType": "keep-alive",
+	"contentEncoding": "gzip",
+	"citySymbol": "[BOM]"
+}
+

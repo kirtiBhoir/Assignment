@@ -13,20 +13,20 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.stereotype.Component;
 
-import locators.FlightResultPageLoc;
+import com.cucumber.listener.Reporter;
 
 @Component
-public class FlightResultsPage extends BasePage implements FlightResultPageLoc {
-	@FindBy(xpath = TEXT_RESULT_COUNT)
+public class FlightResultsPage extends BasePage {
+	@FindBy(xpath = "//strong[@class='resultsCount']")
 	private List<WebElement> listSearchResults;
 
-	@FindBy(xpath = TEXT_SEARCH_RESULTS)
+	@FindBy(xpath = "//div[@class='searchSummary']")
 	private WebElement textSearchResult;
 
-	@FindBy(xpath = ICON_HOTEL_APP)
+	@FindBy(xpath = "//li[@class='hotelApp']")
 	private WebElement iconHotelApp;
 
-	@FindBy(xpath = LIST_FLIGHTS)
+	@FindBy(xpath = "//*[contains(@class,'listItem')]")
 	private List<WebElement> listOfFlights;
 
 	/**
@@ -40,12 +40,17 @@ public class FlightResultsPage extends BasePage implements FlightResultPageLoc {
 	 * Method to verify flight search result page
 	 */
 	public void verifyflightSearchResultsPage() {
-		waiforPageToLoad();
 		waitForVisible(textSearchResult);
 		assertTrue(isVisible(textSearchResult));
+		Reporter.addStepLog("text search result is displayed" + isVisible(textSearchResult));
 		assertTrue(!textSearchResult.getText().isEmpty());
+		Reporter.addStepLog("text search result is:--" + textSearchResult.getText());
+		waitForVisible(iconHotelApp);
 		assertTrue(isVisible(iconHotelApp));
+		Reporter.addStepLog("icon hotel app is displayed" + isVisible(iconHotelApp));
+		waitForVisible(listSearchResults.get(1));
 		assertTrue(listSearchResults.size() > 0);
+		Reporter.addStepLog("Result list size" + listSearchResults.size());
 		verifyFlightList();
 
 	}
@@ -54,12 +59,13 @@ public class FlightResultsPage extends BasePage implements FlightResultPageLoc {
 	 * Method to verify available flights list using java 8 stream
 	 */
 	public void verifyFlightList() {
-		waiforPageToLoad();
+		waitForVisible(listOfFlights.get(1));
 		Assert.assertThat(listOfFlights.size() > 0, Matchers.equalTo(true));
+		Reporter.addStepLog("Result list size" + listOfFlights.size());
 		waiforLoaderToDismiss();
-		listOfFlights.stream().filter(element -> element.getText().equalsIgnoreCase("")).collect(Collectors.toList());
-		List<String> ResultList = listOfFlights.stream().map(element -> element.getText()).collect(Collectors.toList());
-		Assert.assertThat(ResultList.size() > 0, Matchers.equalTo(true));
+		List<String> priceList = listOfFlights.stream().map(element -> element.getAttribute("data-price"))
+				.collect(Collectors.toList());
+		Reporter.addStepLog("price list size" + priceList.size());
 
 	}
 

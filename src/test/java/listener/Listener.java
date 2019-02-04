@@ -15,6 +15,7 @@ public class Listener extends BasePage implements ITestListener {
 	}
 
 	public void onStart(ITestContext result) {
+	
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
@@ -27,11 +28,12 @@ public class Listener extends BasePage implements ITestListener {
 	@Override
 	public void onTestFailure(ITestResult result) {
 		String methodName = result.getName().toString().trim();
-		System.out.println("methodName:::" + methodName);
 		try {
 			takeScreenShot(methodName);
 		} catch (IOException e) {
 			e.printStackTrace();
+			 System.exit(1);
+			
 		}
 
 	}

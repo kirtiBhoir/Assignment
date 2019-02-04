@@ -10,9 +10,10 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class FileReader {
-	private static String sheetName = "Sheet1";
+	private static String sheetName = "UI_Test";
 	private static String inputFilepath = System.getProperty("user.dir")
 			+ "\\src\\test\\resources\\testdata\\data.xlsx";
+	
 
 	private static Map<String, String> map = new HashMap<String, String>();
 

@@ -86,7 +86,7 @@
 			<version>3.2.0</version>
 			<scope>test</scope>
 		</dependency>
-	<dependency>
+		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-spring</artifactId>
 			<version>1.2.5</version>
@@ -113,6 +113,39 @@
 			<artifactId>spring-beans</artifactId>
 			<version>5.1.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock</artifactId>
+			<version>2.1.12</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vimalselvam</groupId>
+			<artifactId>cucumber-extentsreport</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>3.1.2</version>
+		</dependency>
+
 	</dependencies>
 
 
@@ -126,6 +159,11 @@
 					<includes>
 						<include>Runner.java</include>
 					</includes>
+
+					<!-- <suiteXmlFiles> -->
+					<!-- TestNG suite XML files -->
+					<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
+					<!-- </suiteXmlFiles> -->
 				</configuration>
 			</plugin>
 			<plugin>

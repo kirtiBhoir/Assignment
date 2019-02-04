@@ -1,10 +1,14 @@
 package stepDefinition;
 
+import java.io.File;
 import java.io.IOException;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
+
+import com.cucumber.listener.Reporter;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -29,11 +33,9 @@ public class StepDefinition extends BasePage {
 	@Autowired
 	FlightResultsPage flightResultsPage;
 
-	Scenario scenario;
+	static AbstractApplicationContext context;
 
-	AbstractApplicationContext context;
-
-	@Before
+	@Before("@UI")
 	public void before(Scenario scenario) throws IOException {
 		context = getApplicationContext();
 		getDriver();
@@ -41,9 +43,15 @@ public class StepDefinition extends BasePage {
 		this.scenario = scenario;
 		homePage = context.getBean(HomePage.class);
 		flightResultsPage = context.getBean(FlightResultsPage.class);
-		apiValidationpage = context.getBean(ApiValidationPage.class);
 		homePage.init(driver);
 		flightResultsPage.init(driver);
+
+	}
+
+	@Before("@API")
+	public void before1() throws IOException {
+		context = getApplicationContext();
+		apiValidationpage = context.getBean(ApiValidationPage.class);
 
 	}
 
@@ -64,19 +72,19 @@ public class StepDefinition extends BasePage {
 
 	}
 
-	@Then("^user select trip type as \"([^\"]*)\"$")
+	@When("^user select trip type as \"([^\"]*)\"$")
 	public void selectTripType(String tripType) throws IOException {
 		homePage.selectTripType(tripType);
 
 	}
 
-	@When("^user enters city as \"([^\"]*)\" and \"([^\"]*)\"$")
+	@And("^user enters city as \"([^\"]*)\" and \"([^\"]*)\"$")
 	public void fillLocationDetails(String fromCity, String toCity) throws Exception {
 		homePage.fillLocationDetails(testData.getData(scenario.getName(), fromCity),
 				testData.getData(scenario.getName(), toCity));
 	}
 
-	@When("^user wants to \"([^\"]*)\" on \"([^\"]*)\"$")
+	@And("^user wants to \"([^\"]*)\" on \"([^\"]*)\"$")
 	public void fillDateDetails(String tripType, String date) throws Exception {
 		homePage.fillDateDetails(tripType, testData.getData(scenario.getName(), date));
 	}
@@ -97,10 +105,10 @@ public class StepDefinition extends BasePage {
 		flightResultsPage.verifyflightSearchResultsPage();
 	}
 
-	@Then("^user wants details for \"([^\"]*)\"$")
-	public void fetchDetailsForCity(String cityName) throws IOException {
-		System.out.println("city name" + cityName);
-		apiValidationpage.fetchDetailsForCity(testData.getData(scenario.getName(), cityName));
+	@When("^user wants details for \"([^\"]*)\"$")
+	public void fetchDetailsForCity(String cityName) throws IOException, ParseException {
+		Reporter.addStepLog("City name is" + cityName);
+		apiValidationpage.fetchDetailsForCity(cityName);
 	}
 
 	@Then("^user validates status details$")
@@ -108,18 +116,32 @@ public class StepDefinition extends BasePage {
 		apiValidationpage.validateStatusDetails();
 	}
 
-	@And("^user validates headers$")
+	@Then("^user validates headers$")
 	public void validateHeader() {
 		apiValidationpage.validateHeader();
 	}
 
 	@Then("^user validates city details for \"([^\"]*)\"$")
 	public void validateCityDetails(String cityName) throws IOException {
-		apiValidationpage.validateCityDetails(testData.getData(scenario.getName(), cityName));
+		apiValidationpage.validateCityDetails(cityName);
+	}
+
+	@And("^user wants to depart on \"([^\"]*)\"$")
+	public void fillDepartDate(String date) throws Exception {
+		homePage.fillDepartDateDetails(testData.getData(scenario.getName(), date));
+	}
+
+	@And("^user wants to return on \"([^\"]*)\"$")
+	public void fillReturnDate(String date) throws Exception {
+		homePage.fillReturDateDetails(testData.getData(scenario.getName(), date));
 	}
 
 	@After
 	public void closeSession() {
+		Reporter.loadXMLConfig(new File("config/extent-config.xml"));
+		Reporter.setSystemInfo("user", "kirti");
+		Reporter.setSystemInfo("os", "Windows 10");
+		Reporter.setTestRunnerOutput("Sample test runner output message");
 		closeApplication();
 	}
 

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
@@ -30,9 +31,10 @@ import org.testng.Reporter;
 import core.AppConfig;
 import core.DriverManager;
 import cucumber.api.Scenario;
+import utils.ExcelReaderUtilityManager;
 import utils.FileReader;
 
-public class BasePage {
+public class BasePage extends ExcelReaderUtilityManager {
 	protected final static Logger logger = Logger.getLogger(BasePage.class);
 	Properties properties = new Properties();
 	InputStream fileInput = null;
@@ -40,6 +42,7 @@ public class BasePage {
 	public static WebDriver driver;
 	public FileReader testData = new FileReader();
 	public Scenario scenario;
+	protected static String reportConfigPath = System.getProperty("user.dir") + "\\cofig\\extent-config.xml";
 
 	/**
 	 * Method to get application context
@@ -78,8 +81,21 @@ public class BasePage {
 	 * @throws IOException
 	 */
 	public void getDriver() throws IOException {
-		readPropertiesFile();
-		driver = DriverManager.getDriver(properties.getProperty("driverName"));
+		DriverManager d = new DriverManager();
+		try {
+			fileInput = new FileInputStream("./src/test/resources/driver.properties");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		try {
+			properties.load(fileInput);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		driver = d.getDriver(properties.getProperty("driverName"));
 		driver.manage().window().maximize();
 	}
 
@@ -99,11 +115,12 @@ public class BasePage {
 	public void closeApplication() {
 		try {
 			if (driver != null) {
-				driver.close();
+				driver.quit();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Reporter.log("No active driver available to close");
+			System.exit(1);
 		}
 	}
 
@@ -119,7 +136,9 @@ public class BasePage {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(1);
 			return false;
+
 		}
 
 	}
@@ -131,7 +150,20 @@ public class BasePage {
 	 */
 	protected void waitForVisible(WebElement element) {
 		if (!element.isDisplayed()) {
-			WebDriverWait wait = new WebDriverWait(driver, 90);
+			WebDriverWait wait = new WebDriverWait(driver, 200);
+			wait.until(ExpectedConditions.visibilityOf(element));
+
+		}
+	}
+
+	/**
+	 * Method to wait for element to be invisible on page
+	 * 
+	 * @param element
+	 */
+	protected void waitForNotVisible(WebElement element) {
+		if (element.isDisplayed()) {
+			WebDriverWait wait = new WebDriverWait(driver, 100);
 			wait.until(ExpectedConditions.visibilityOf(element));
 
 		}
@@ -169,6 +201,7 @@ public class BasePage {
 			driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.exit(1);
 		}
 
 	}
@@ -207,11 +240,13 @@ public class BasePage {
 			fileInput = new FileInputStream("./src/test/resources/application.properties");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			System.exit(1);
 		}
 		try {
 			properties.load(fileInput);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 
@@ -226,6 +261,36 @@ public class BasePage {
 		String value = properties.getProperty(key);
 		return value;
 	}
-	
-	
+
+	private final String selectDate = "//td[@data-month='%s' and @data-year='%s' ]/a[text()='%s']";
+
+	public WebElement selectDate(int month, String year, String day) {
+		WebElement element = driver.findElement(By.xpath(String.format(selectDate, month, year, day)));
+		return element;
+	}
+
+	/**
+	 * Method to create locator from user input date
+	 */
+	protected WebElement getDate(String date) {
+
+		String dateArray[] = date.split(" ");
+		for (String s : dateArray) {
+			System.out.println(s);
+		}
+		int month = Integer.parseInt(dateArray[1]);
+		String year = dateArray[2];
+		String day = dateArray[0];
+		WebElement date1 = selectDate(month - 1, year, day);
+		return date1;
+
+	}
+
+	protected String getReportConfigPath() {
+		if (reportConfigPath != null)
+			return reportConfigPath;
+		else
+			throw new RuntimeException(
+					"Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");
+	}
 }
