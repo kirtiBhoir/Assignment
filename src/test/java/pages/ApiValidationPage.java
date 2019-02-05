@@ -106,14 +106,20 @@ public class ApiValidationPage extends BasePage {
 		Reporter.addStepLog("Fetching details for " + cityName);
 		Assert.assertTrue(responseBody.toLowerCase().contains(cityName));
 		Reporter.addStepLog("json path object " + jsonPathObj);
-		String citySymbol = jsonPathObj.getString("k");
-		String cityAirport = jsonPathObj.getString("v");
+		String receivedCitySymbol = jsonPathObj.getString("k");
+		String receivedAirportName = jsonPathObj.getString("v");
 
-		Reporter.addStepLog("city symbol is " + citySymbol);
-		Reporter.addStepLog("city airport name is " + cityAirport);
-		citySymbol = (String) jsonObj.get("citySymbol");
-		Assert.assertEquals(citySymbol, citySymbol, "Correct city name received in the Response");
-		Assert.assertEquals(jsonPathObj.get("k").toString(), citySymbol);
+		Reporter.addStepLog("received city symbol is " + receivedCitySymbol);
+		Reporter.addStepLog("received airport name is " + receivedAirportName);
+
+		String ExpectedCitySymbol = (String) jsonObj.get("citySymbol");
+		String ExpectedAirportName = (String) jsonObj.get("cityAirport");
+
+		Assert.assertEquals(receivedCitySymbol, ExpectedCitySymbol, "Correct city name received in the Response");
+		Assert.assertEquals(jsonPathObj.get("k").toString(), ExpectedCitySymbol);
+
+		Assert.assertEquals(receivedAirportName, ExpectedAirportName, "Correct airport name received in the Response");
+		Assert.assertEquals(jsonPathObj.get("v").toString(), ExpectedAirportName);
 
 	}
 
