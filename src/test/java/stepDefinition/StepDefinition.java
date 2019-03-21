@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 
 import com.cucumber.listener.Reporter;
 
+import cleartripAssignment.common.BasePage;
+import cleartripAssignment.pages.ApiValidationPage;
+import cleartripAssignment.pages.FlightResultsPage;
+import cleartripAssignment.pages.HomePage;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import pages.ApiValidationPage;
-import pages.BasePage;
-import pages.FlightResultsPage;
-import pages.HomePage;
 
 @Component
 public class StepDefinition extends BasePage {
@@ -138,7 +138,7 @@ public class StepDefinition extends BasePage {
 
 	@After
 	public void closeSession() {
-		Reporter.loadXMLConfig(new File("config/extent-config.xml"));
+		Reporter.loadXMLConfig(new File("src/test/resources/config/extent-config.xml"));
 		Reporter.setSystemInfo("user", "kirti");
 		Reporter.setSystemInfo("os", "Windows 10");
 		Reporter.setTestRunnerOutput("Sample test runner output message");
